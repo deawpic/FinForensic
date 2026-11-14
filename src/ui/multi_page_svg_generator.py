@@ -198,7 +198,7 @@ class MultiPageSvgGenerator:
             f'<svg xmlns="http://www.w3.org/2000/svg" '
             f'xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" '
             f'xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" '
-            f'width="{doc_w:.2f}px" height="{doc_h:.2f}px" viewBox="0 0 {doc_w:.2f} {doc_h:.2f}" version="1.1">'
+            f'width="{self.config.width:.2f}px" height="{doc_h:.2f}px" viewBox="0 0 {self.config.width:.2f} {doc_h:.2f}" version="1.1">'
         )
 
         # Inkscape Multi-Page NamedView with dynamic pages

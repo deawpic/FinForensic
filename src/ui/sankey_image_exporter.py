@@ -160,12 +160,17 @@ def render_sankey_diagram_image(
 
     output_png_path.parent.mkdir(parents=True, exist_ok=True)
     temp_html = output_png_path.parent / f"__temp_sankey_{output_png_path.stem}.html"
+    temp_profile_dir = output_png_path.parent / f"__temp_chrome_profile_{output_png_path.stem}"
     try:
         generate_sankey_html_page(result, temp_html)
         file_url = temp_html.resolve().as_uri()
 
         cmd = [
             chrome_bin,
+            "--headless=new",
+            f"--user-data-dir={temp_profile_dir.resolve().as_posix()}",
+            "--no-first-run",
+            "--no-default-browser-check",
             f"--screenshot={output_png_path.resolve().as_posix()}",
             f"--window-size={width},{height}",
             f"--force-device-scale-factor={scale_factor}",
@@ -182,3 +187,5 @@ def render_sankey_diagram_image(
     finally:
         if temp_html.exists():
             temp_html.unlink(missing_ok=True)
+        if temp_profile_dir.exists():
+            shutil.rmtree(temp_profile_dir, ignore_errors=True)
